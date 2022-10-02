@@ -49,6 +49,7 @@ def approvereject(request):
         return JsonResponse('Your Status is {}'.format(newdf), safe=False)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+        
 def cxcontact(request):
 	if request.method=='POST':
 		form=ApprovalForm(request.POST)
