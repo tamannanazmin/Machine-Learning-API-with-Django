@@ -7,10 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post">
+    <form method='post'>
         {% csrf_token %}
         {{form|linebreaks}}
-        <button type="submit">Submit</button>
+        <button type='submit'>Submit</button>
     </form>
 </body>
 </html>
