@@ -1,6 +1,6 @@
-import imp
+
 from django.shortcuts import render
-from . forms import MyForm
+#from . forms import MyForm
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from django.core import serializers
@@ -22,8 +22,8 @@ import pandas as pd
 
 # When called , get the all objects/data
 class ApprovalsView(viewsets.ModelViewSet):
-    queryset=approvals.objects.all()
-    serializer_class=approvalsSerializers
+	queryset = approvals.objects.all()
+	serializer_class = approvalsSerializers
 
 '''def myform(request):
     if request.method="POST":
@@ -36,11 +36,11 @@ class ApprovalsView(viewsets.ModelViewSet):
 def approvereject(request):
     try:
         #ohe_col=joblib.load("C:\Users\tamanna13505\ML_with_django\DjangoAPI\MyAPI\loan_model.pkl")
-        mdl=joblib.load("C:\Users\tamanna13505\ML_with_django\DjangoAPI\MyAPI\loan_model.pkl")
+        mdl=joblib.load("C:/Users/tamanna13505/ML_with_django/DjangoAPI/MyAPI/loan_model.pkl")
         mydata=request.data
         unit=np.array(list(mydata.values()))
         unit=unit.reshape(1,-1)
-        scalers=joblib.load("C:\Users\tamanna13505\ML_with_django\DjangoAPI\MyAPI\scalers.pkl")
+        scalers=joblib.load("C:/Users/tamanna13505/ML_with_django/DjangoAPI/MyAPI/scalers.pkl")
         X=scalers.transform(unit)
         y_pred=mdl.predict(X)
         y_pred=(y_pred>0.58)
