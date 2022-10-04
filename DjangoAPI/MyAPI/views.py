@@ -18,6 +18,8 @@ import json
 import numpy as np
 from sklearn import preprocessing
 import pandas as pd
+from django.contrib import messages
+
 
 
 # When called , get the all objects/data
@@ -36,14 +38,6 @@ def ohevalue(df):
 			newdict[i]=0
 	newdf=pd.DataFrame(newdict)
 	return newdf
-'''def myform(request):
-    if request.method="POST":
-        form=MyForm(request.POST)
-        if form.is_valid():
-            myform=form.save(commit=False)
-    else:
-        form=MyForm()'''
-#@api_view(["POST"])
 def approvereject(unit):
 	try:
 		mdl=joblib.load("/Users/tamanna13505/ML_with_django/DjangoAPI/MyAPI/loan_model.pkl")
@@ -53,9 +47,10 @@ def approvereject(unit):
 		y_pred=(y_pred>0.58)
 		newdf=pd.DataFrame(y_pred, columns=['Status'])
 		newdf=newdf.replace({True:'Approved', False:'Rejected'})
-		#K.clear_session()
-		return (newdf.values[0][0],X[0])
+		#k.clear_session()
+		return newdf.values[0][0]
 	except ValueError as e:
+		print(e)
 		return (e.args[0])
         
 def cxcontact(request):
@@ -75,14 +70,17 @@ def cxcontact(request):
 			Education = form.cleaned_data['Education']
 			Self_Employed = form.cleaned_data['Self_Employed']
 			Property_Area = form.cleaned_data['Property_Area']
-			print(Firstname, Lastname)
+			print(Firstname, Lastname, Dependents, ApplicantIncome,
+			 CoapplicantIncome, LoanAmount, Loan_Amount_Term, Credit_History,Gender,Married,Education,Self_Employed,Property_Area)
 			myDict = (request.POST).dict()
+			print('my Dictonary: ',myDict)
 			df=pd.DataFrame(myDict, index=[0])
-			print(ohevalue(df))
-			#answer=approvereject(ohevalue(df))[0]
+			print('DF: ',df)
+			answer=approvereject(ohevalue(df))[0]
+			print('Answer:',answer)
 			#Xscalers=approvereject(ohevalue(df))[1]
 			#print(Xscalers)
-			#messages.success(request,'Application Status: {}'.format(answer))
+			messages.success(request,'Application Status: {}'.format(answer))
 	
 	form = ApprovalForm()
 				
